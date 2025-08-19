@@ -1,252 +1,129 @@
-# 📦 Inventory Management System - Backend API
+# 📦 Inventory Management System
 
-A modern, secure inventory management system built with **ASP.NET Core 9.0** featuring JWT authentication, Entity Framework Core, and a clean architecture pattern.
+A modern inventory management system built with **ASP.NET Core**, featuring JWT authentication, real-time inventory tracking, and comprehensive product management.
 
-## 🚀 Features
+## 🌟 Overview
 
-### 🔐 **Authentication & Security**
+This inventory management system provides a complete solution for businesses to track products, manage stock levels, and monitor inventory movements with a secure, role-based access control system.
 
-- JWT-based authentication with BCrypt password hashing
-- Role-based access control (Admin, Manager, User)
-- Protected API endpoints with authorization middleware
-- Secure token generation and validation
+### 🎯 **Key Features**
 
-### 📊 **Inventory Management**
+- 🔐 **Secure Authentication** - JWT-based authentication with role management
+- 📊 **Real-time Inventory** - Live stock tracking and movement history
+- 🏷️ **Product Management** - Complete CRUD operations with categories and locations
+- 👥 **User Management** - Role-based access control (Admin, Manager, User)
+- **Advanced Search** - Filter and search products by multiple criteria
+- 📈 **Analytics Dashboard** - Insights into inventory trends and patterns
 
-- **Products**: Complete CRUD operations with categories and locations
-- **Movements**: Track inventory in/out movements with automatic quantity updates
-- **Users**: User management with role-based permissions
-- **Categories**: Product categorization system
+## 🏗️ **System Architecture**
 
-### 🏗️ **Architecture**
+```
+┌─────────────────┐    ┌─────────────────┐
+│    Backend      │    │    Database     │
+│  (ASP.NET Core) │◄──►│  (SQL Server)   │
+│                 │    │                 │
+│ • REST API      │    │ • Entity Data   │
+│ • Authentication│    │ • Relationships │
+│ • Business Logic│    │ • Constraints   │
+└─────────────────┘    └─────────────────┘
+```
 
-- **Clean Architecture** with separation of concerns
-- **Repository Pattern** for data access abstraction
-- **Service Layer** for business logic
-- **DTOs** for API data transfer
-- **Entity Framework Core** with Code-First migrations
-
-### 🛠️ **Technical Stack**
-
-- **Framework**: ASP.NET Core 9.0
-- **Database**: SQL Server / In-Memory (configurable)
-- **ORM**: Entity Framework Core
-- **Authentication**: JWT Bearer tokens
-- **API Documentation**: OpenAPI/Swagger
-- **Password Hashing**: BCrypt.Net
-
-## 📋 Prerequisites
+## 📋 **Prerequisites**
 
 - **.NET 9.0 SDK** or later
-- **SQL Server** (optional - can use In-Memory database)
-- **Visual Studio 2022** or **VS Code** (recommended)
+- **SQL Server** (or SQL Server LocalDB)
+- **Visual Studio 2022** or **VS Code**
 
-## ⚡ Quick Start
+## 🚀 **Quick Start**
 
-### 1. Clone the Repository
+### **1. Clone the Repository**
 
 ```bash
-git clone https://github.com/yourusername/inventory-system.git
-cd inventory-system/server
+git clone https://github.com/manoguzman/inventory-system.git
+cd inventory-system
 ```
 
-### 2. Install Dependencies
+### **2. Setup**
 
 ```bash
+cd server
 dotnet restore
-```
-
-### 3. Configure Database
-
-Choose your database option in `appsettings.Development.json`:
-
-**Option A: In-Memory Database (Default)**
-
-```json
-{
-  "UseInMemoryDatabase": true
-}
-```
-
-**Option B: SQL Server**
-
-```json
-{
-  "UseInMemoryDatabase": false,
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=InventorySystemDb;Trusted_Connection=true;"
-  }
-}
-```
-
-### 4. Run Database Migrations (SQL Server only)
-
-```bash
-dotnet ef database update
-```
-
-### 5. Start the Application
-
-```bash
 dotnet run
 ```
 
-The API will be available at:
+The API will be available at `http://localhost:5184`
 
-- **HTTP**: `http://localhost:5184`
-- **Swagger UI**: `http://localhost:5184/swagger` (Development only)
-
-## 🔑 Authentication
-
-### Default Admin User
-
-The system creates a default admin user on startup:
-
-- **Username**: `admin`
-- **Password**: `admin123`
-- **Role**: `Admin`
-
-### Login Process
-
-1. **POST** `/api/auth/login` with credentials
-2. Receive JWT token in response
-3. Include token in `Authorization: Bearer {token}` header for protected endpoints
-
-### Example Login Request
-
-```json
-POST /api/auth/login
-Content-Type: application/json
-
-{
-  "username": "admin",
-  "password": "admin123"
-}
-```
-
-### Example Response
-
-```json
-{
-  "success": true,
-  "message": "Login successful",
-  "data": {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "expiration": "2025-08-19T07:56:00Z",
-    "user": {
-      "id": 1,
-      "username": "admin",
-      "role": "Admin"
-    }
-  }
-}
-```
-
-## 📚 API Endpoints
-
-### 🔐 Authentication
-
-| Method | Endpoint           | Description           | Auth Required |
-| ------ | ------------------ | --------------------- | ------------- |
-| POST   | `/api/auth/login`  | User authentication   | ❌            |
-| GET    | `/api/auth/me`     | Get current user info | ✅            |
-| GET    | `/api/auth/verify` | Verify token validity | ✅            |
-| POST   | `/api/auth/logout` | User logout           | ✅            |
-
-### 📦 Products
-
-| Method | Endpoint             | Description        | Auth Required |
-| ------ | -------------------- | ------------------ | ------------- |
-| GET    | `/api/products`      | Get all products   | ✅            |
-| GET    | `/api/products/{id}` | Get product by ID  | ✅            |
-| POST   | `/api/products`      | Create new product | ✅            |
-| PUT    | `/api/products/{id}` | Update product     | ✅            |
-| DELETE | `/api/products/{id}` | Delete product     | ✅            |
-
-### 📊 Inventory
-
-| Method | Endpoint                   | Description               | Auth Required |
-| ------ | -------------------------- | ------------------------- | ------------- |
-| GET    | `/api/inventory`           | Get inventory movements   | ✅            |
-| POST   | `/api/inventory/movement`  | Record inventory movement | ✅            |
-| GET    | `/api/inventory/low-stock` | Get low stock products    | ✅            |
-
-## 🧪 Testing the API
-
-### Using HTTP Files
-
-The project includes test files:
-
-- `test-auth.http` - Authentication flow testing
-- `server.http` - General API testing
-
-### Using cURL
-
-```bash
-# Login
-curl -X POST http://localhost:5184/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"username": "admin", "password": "admin123"}'
-
-# Get products (replace {token} with actual token)
-curl -X GET http://localhost:5184/api/products \
-  -H "Authorization: Bearer {token}"
-```
-
-### Using Swagger UI
-
-Visit `http://localhost:5184/swagger` in development mode for interactive API documentation.
-
-## 📁 Project Structure
+## 🔧 **Project Structure**
 
 ```
-server/
-├── Controllers/           # API Controllers
-│   ├── AuthController.cs     # Authentication endpoints
-│   ├── ProductsController.cs # Product management
-│   └── InventoryController.cs # Inventory operations
-├── Services/             # Business Logic Layer
-│   ├── IAuthenticationService.cs
-│   ├── AuthenticationService.cs
-│   ├── IUserService.cs
-│   ├── UserService.cs
-│   ├── IProductService.cs
-│   ├── ProductService.cs
-│   ├── IMovementService.cs
-│   └── MovementService.cs
-├── Repositories/         # Data Access Layer
-│   ├── IProductRepository.cs
-│   ├── ProductRepository.cs
-│   ├── IMovementRepository.cs
-│   ├── MovementRepository.cs
-│   ├── IUserRepository.cs
-│   └── UserRepository.cs
-├── Models/              # Domain Entities
-│   ├── Product.cs
-│   ├── Movement.cs
-│   └── User.cs
-├── DTOs/               # Data Transfer Objects
-│   ├── ProductDto.cs
-│   ├── MovementDto.cs
-│   ├── UserDto.cs
-│   ├── AuthenticationDto.cs
-│   └── ApiResponse.cs
-├── Data/               # Database Context
-│   ├── InventoryContext.cs
-│   └── InventoryContextFactory.cs
-├── Migrations/         # EF Core Migrations
-├── Scripts/           # Database Scripts
-└── Properties/        # Launch Settings
+inventory-system/
+├── 📁 server/                 # Backend (ASP.NET Core)
+│   ├── Controllers/           # API Controllers
+│   ├── Services/             # Business Logic
+│   ├── Repositories/         # Data Access Layer
+│   ├── Models/               # Domain Entities
+│   ├── DTOs/                 # Data Transfer Objects
+│   ├── Data/                 # EF Core Context
+│   ├── Migrations/           # Database Migrations
+│   └── Scripts/              # Database Scripts
+│
+├── 📁 docs/                   # Documentation
+├── 📄 README.md              # This file
+└── 📄 .gitignore             # Git ignore rules
 ```
 
-## ⚙️ Configuration
+## 🖥️ **Backend (ASP.NET Core)**
 
-### JWT Settings
+### **🔥 Features**
 
-Configure JWT authentication in `appsettings.json`:
+- ✅ **JWT Authentication** with BCrypt password hashing
+- ✅ **RESTful API** with OpenAPI/Swagger documentation
+- ✅ **Entity Framework Core** with Code-First migrations
+- ✅ **Repository Pattern** for clean architecture
+- ✅ **Service Layer** for business logic separation
+- ✅ **Role-based Authorization** (Admin, Manager, User)
+- ✅ **In-Memory & SQL Server** database support
+- ✅ **CORS Configuration** for cross-origin requests
+
+### **📚 API Endpoints**
+
+#### **🔐 Authentication**
+
+| Method | Endpoint           | Description           |
+| ------ | ------------------ | --------------------- |
+| `POST` | `/api/auth/login`  | User authentication   |
+| `GET`  | `/api/auth/me`     | Get current user info |
+| `GET`  | `/api/auth/verify` | Verify token validity |
+| `POST` | `/api/auth/logout` | User logout           |
+
+#### **📦 Products**
+
+| Method   | Endpoint             | Description        |
+| -------- | -------------------- | ------------------ |
+| `GET`    | `/api/products`      | Get all products   |
+| `GET`    | `/api/products/{id}` | Get product by ID  |
+| `POST`   | `/api/products`      | Create new product |
+| `PUT`    | `/api/products/{id}` | Update product     |
+| `DELETE` | `/api/products/{id}` | Delete product     |
+
+#### **📊 Inventory**
+
+| Method | Endpoint                   | Description               |
+| ------ | -------------------------- | ------------------------- |
+| `GET`  | `/api/inventory`           | Get inventory movements   |
+| `POST` | `/api/inventory/movement`  | Record inventory movement |
+| `GET`  | `/api/inventory/low-stock` | Get low stock products    |
+
+### **🔧 Configuration**
+
+**Database Configuration** (`appsettings.json`):
 
 ```json
 {
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=InventorySystemDb;Trusted_Connection=true;"
+  },
+  "UseInMemoryDatabase": false,
   "JwtSettings": {
     "SecretKey": "YourSecretKey",
     "Issuer": "InventorySystemAPI",
@@ -256,118 +133,166 @@ Configure JWT authentication in `appsettings.json`:
 }
 ```
 
-### Database Configuration
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=InventorySystemDb;Trusted_Connection=true;"
-  },
-  "UseInMemoryDatabase": false
-}
-```
-
-## 🗄️ Database Schema
-
-### Products Table
-
-- `Id` (Primary Key)
-- `Code` (Unique identifier)
-- `Name` (Product name)
-- `Category` (Product category)
-- `Quantity` (Current stock)
-- `Location` (Storage location)
-- `RegistrationDate` (Creation date)
-
-### Movements Table
-
-- `Id` (Primary Key)
-- `ProductId` (Foreign Key)
-- `MovementType` (In/Out)
-- `Quantity` (Movement amount)
-- `Date` (Movement date)
-
-### Users Table
-
-- `Id` (Primary Key)
-- `Username` (Unique)
-- `PasswordHash` (BCrypt hashed)
-- `Role` (Admin/Manager/User)
-- `CreatedAt` (Account creation)
-- `LastLoginAt` (Last login timestamp)
-- `IsActive` (Account status)
-
-## 🔧 Development
-
-### Adding New Migrations
+### **🧪 Testing the Backend**
 
 ```bash
-dotnet ef migrations add MigrationName
-dotnet ef database update
+cd server
+
+# Run the application
+dotnet run
+
+# Test authentication
+curl -X POST http://localhost:5184/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username": "admin", "password": "admin123"}'
 ```
 
-### Running Tests
+**Default Admin User:**
 
-```bash
-dotnet test
+- Username: `admin`
+- Password: `admin123`
+- Role: `Admin`
+
+## 📊 **Database Schema**
+
+### **Core Tables**
+
+```sql
+Users
+├── Id (PK)
+├── Username (Unique)
+├── PasswordHash (BCrypt)
+├── Role (Admin/Manager/User)
+├── CreatedAt
+├── LastLoginAt
+└── IsActive
+
+Products
+├── Id (PK)
+├── Code (Unique)
+├── Name
+├── Category
+├── Quantity
+├── Location
+└── RegistrationDate
+
+Movements
+├── Id (PK)
+├── ProductId (FK)
+├── MovementType (In/Out)
+├── Quantity
+└── Date
 ```
 
-### Code Formatting
+## 🧪 **Testing**
 
-The project follows standard C# coding conventions with:
-
-- PascalCase for public members
-- camelCase for private fields
-- Meaningful naming conventions
-- Proper async/await patterns
-
-## 🚀 Deployment
-
-### Building for Production
+### **Backend Testing**
 
 ```bash
+cd server
+dotnet test                    # Run unit tests
+dotnet run                     # Start API server
+```
+
+**Test Files Included:**
+
+- `test-auth.http` - Authentication flow testing
+- `server.http` - General API testing
+
+## 🚀 **Deployment**
+
+### **Backend Deployment**
+
+```bash
+cd server
 dotnet publish -c Release -o ./publish
 ```
 
-### Environment Variables
+### **Docker Support** _(Planned)_
 
-Set these environment variables in production:
+```bash
+docker-compose up -d           # Start all services
+```
 
-- `ASPNETCORE_ENVIRONMENT=Production`
-- `ConnectionStrings__DefaultConnection=<your-connection-string>`
-- `JwtSettings__SecretKey=<your-secret-key>`
+## 🔐 **Security Features**
 
-## 🤝 Contributing
+- ✅ **JWT Authentication** with secure token generation
+- ✅ **BCrypt Password Hashing** for user credentials
+- ✅ **Role-based Authorization** for endpoint protection
+- ✅ **CORS Configuration** for secure cross-origin requests
+- ✅ **Input Validation** with data annotations
+- 🔲 **Rate Limiting** (planned)
+- 🔲 **API Key Authentication** (planned)
+- 🔲 **Audit Logging** (planned)
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## 📈 **Roadmap**
 
-## 📄 License
+### **Phase 1: Core Backend** ✅ _COMPLETED_
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- [x] Authentication system
+- [x] Product management
+- [x] Inventory tracking
+- [x] User management
+- [x] API documentation
 
-## 🆘 Support
+### **Phase 2: Advanced Features** 📋 _PLANNED_
 
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/yourusername/inventory-system/issues) page
-2. Create a new issue with detailed information
-3. Include error messages and steps to reproduce
-
-## 🎯 Roadmap
-
-### Upcoming Features
-
-- [ ] Advanced reporting and analytics
-- [ ] Barcode scanning support
-- [ ] Email notifications for low stock
+- [ ] Real-time notifications
+- [ ] Advanced reporting
+- [ ] Barcode scanning
 - [ ] Multi-warehouse support
-- [ ] Product images and attachments
-- [ ] Audit logging
-- [ ] Data export (Excel/CSV)
-- [ ] Mobile app integration
+- [ ] API rate limiting
+- [ ] Automated testing
+
+### **Phase 3: Production Features** 🎯 _FUTURE_
+
+- [ ] Docker containerization
+- [ ] CI/CD pipeline
+- [ ] Load balancing
+- [ ] Monitoring & logging
+- [ ] Performance optimization
+
+## 🤝 **Contributing**
+
+We welcome contributions! Please follow these steps:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add some amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### **Development Guidelines**
+
+- Follow **C# coding conventions** for backend
+- Write **unit tests** for new features
+- Update **documentation** for API changes
+- Follow **commit message conventions**
+
+## 📄 **License**
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 **Support & Issues**
+
+- 📚 **Documentation**: Check this README and code comments
+- 🐛 **Bug Reports**: [Create an issue](https://github.com/manoguzman/inventory-system/issues)
+- 💡 **Feature Requests**: [Open a discussion](https://github.com/manoguzman/inventory-system/discussions)
+- 📧 **Contact**: manoguzman@example.com
+
+## 🙏 **Acknowledgments**
+
+- **ASP.NET Core Team** for the excellent framework
+- **Entity Framework** for ORM capabilities
+- **JWT.NET** for authentication tokens
+- **Open Source Contributors** who make this possible
 
 ---
+
+<div align="center">
+
+[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
+[![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server)](https://www.microsoft.com/sql-server)
+[![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens)](https://jwt.io/)
+
+</div>
