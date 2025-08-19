@@ -1,0 +1,54 @@
+@hostAddress = http://localhost:5184
+
+### Get all products
+GET {{hostAddress}}/api/products
+
+### Get a specific product
+GET {{hostAddress}}/api/products/1
+
+### Get product by code
+GET {{hostAddress}}/api/products/code/ELEC001
+
+### Get all categories
+GET {{hostAddress}}/api/products/categories
+
+### Get products by category
+GET {{hostAddress}}/api/products/category/Electronics
+
+### Create a new product
+POST {{hostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "code": "TEST001",
+  "name": "Test Product",
+  "category": "Test Category",
+  "quantity": 50,
+  "location": "Test Location"
+}
+
+### Get all movements
+GET {{hostAddress}}/api/inventory/movements
+
+### Get movements for a product
+GET {{hostAddress}}/api/inventory/movements/1
+
+### Create a movement (stock in)
+POST {{hostAddress}}/api/inventory/movement
+Content-Type: application/json
+
+{
+  "productId": 1,
+  "movementType": "In",
+  "quantity": 5
+}
+
+### Create a movement (stock out)
+POST {{hostAddress}}/api/inventory/movement
+Content-Type: application/json
+
+{
+  "productId": 1,
+  "movementType": "Out",
+  "quantity": 2
+}
