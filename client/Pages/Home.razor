@@ -1,0 +1,147 @@
+﻿@page "/"
+
+<PageTitle>Dashboard - Inventory System</PageTitle>
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h3" GutterBottom="true">📦 Dashboard</MudText>
+        <MudText Typo="Typo.body1" Class="mb-4">Welcome to your inventory management system</MudText>
+    </MudItem>
+
+    <!-- Stats Cards -->
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <div class="d-flex align-center">
+                    <MudIcon Icon="Icons.Material.Filled.Inventory" Size="Size.Large" Color="Color.Primary"
+                        Class="mr-3" />
+                    <div>
+                        <MudText Typo="Typo.h4">1,247</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">Total Products</MudText>
+                    </div>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <div class="d-flex align-center">
+                    <MudIcon Icon="Icons.Material.Filled.TrendingUp" Size="Size.Large" Color="Color.Success"
+                        Class="mr-3" />
+                    <div>
+                        <MudText Typo="Typo.h4">342</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">Stock In Today</MudText>
+                    </div>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <div class="d-flex align-center">
+                    <MudIcon Icon="Icons.Material.Filled.TrendingDown" Size="Size.Large" Color="Color.Warning"
+                        Class="mr-3" />
+                    <div>
+                        <MudText Typo="Typo.h4">128</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">Stock Out Today</MudText>
+                    </div>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <div class="d-flex align-center">
+                    <MudIcon Icon="Icons.Material.Filled.Warning" Size="Size.Large" Color="Color.Error" Class="mr-3" />
+                    <div>
+                        <MudText Typo="Typo.h4">23</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">Low Stock Items</MudText>
+                    </div>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <!-- Recent Activity -->
+    <MudItem xs="12" md="8">
+        <MudCard Elevation="2">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Recent Inventory Movements</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudTable Items="@recentMovements" Hover="true" Dense="true" FixedHeader="true" Height="300px">
+                    <HeaderContent>
+                        <MudTh>Product</MudTh>
+                        <MudTh>Type</MudTh>
+                        <MudTh>Quantity</MudTh>
+                        <MudTh>Date</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Product">@context.ProductName</MudTd>
+                        <MudTd DataLabel="Type">
+                            <MudChip T="string" Size="Size.Small"
+                                Color="@(context.MovementType == MovementType.In ? Color.Success : Color.Warning)">
+                                @context.MovementType
+                            </MudChip>
+                        </MudTd>
+                        <MudTd DataLabel="Quantity">@context.Quantity</MudTd>
+                        <MudTd DataLabel="Date">@context.Date.ToString("MMM dd, HH:mm")</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <!-- Quick Actions -->
+    <MudItem xs="12" md="4">
+        <MudCard Elevation="2">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Quick Actions</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudStack Spacing="2">
+                    <MudButton StartIcon="Icons.Material.Filled.Add" Color="Color.Primary" Variant="Variant.Filled"
+                        FullWidth="true">
+                        Add New Product
+                    </MudButton>
+                    <MudButton StartIcon="Icons.Material.Filled.SwapHoriz" Color="Color.Secondary"
+                        Variant="Variant.Outlined" FullWidth="true">
+                        Record Movement
+                    </MudButton>
+                    <MudButton StartIcon="Icons.Material.Filled.Assessment" Color="Color.Tertiary"
+                        Variant="Variant.Outlined" FullWidth="true">
+                        Generate Report
+                    </MudButton>
+                    <MudButton StartIcon="Icons.Material.Filled.Search" Color="Color.Info" Variant="Variant.Outlined"
+                        FullWidth="true">
+                        Search Inventory
+                    </MudButton>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private List<MovementDto> recentMovements = new()
+{
+new MovementDto { ProductName = "Laptop Dell XPS", MovementType = MovementType.In, Quantity = 10, Date =
+DateTime.Now.AddHours(-2) },
+new MovementDto { ProductName = "Monitor Samsung", MovementType = MovementType.Out, Quantity = 5, Date =
+DateTime.Now.AddHours(-1) },
+new MovementDto { ProductName = "Keyboard Logitech", MovementType = MovementType.In, Quantity = 25, Date =
+DateTime.Now.AddMinutes(-30) },
+new MovementDto { ProductName = "Mouse Wireless", MovementType = MovementType.Out, Quantity = 8, Date =
+DateTime.Now.AddMinutes(-15) },
+};
+}
