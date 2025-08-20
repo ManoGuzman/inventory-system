@@ -18,14 +18,15 @@ This inventory management system provides a complete solution for businesses to 
 ## 🏗️ **System Architecture**
 
 ```
-┌─────────────────┐    ┌─────────────────┐
-│    Backend      │    │    Database     │
-│  (ASP.NET Core) │◄──►│  (SQL Server)   │
-│                 │    │                 │
-│ • REST API      │    │ • Entity Data   │
-│ • Authentication│    │ • Relationships │
-│ • Business Logic│    │ • Constraints   │
-└─────────────────┘    └─────────────────┘
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│    Frontend     │    │    Backend      │    │    Database     │
+│ (Blazor WASM)   │◄──►│  (ASP.NET Core) │◄──►│  (SQL Server)   │
+│                 │    │                 │    │                 │
+│ • SPA Client    │    │ • REST API      │    │ • Entity Data   │
+│ • MudBlazor UI  │    │ • Authentication│    │ • Relationships │
+│ • State Mgmt    │    │ • Business Logic│    │ • Constraints   │
+│ • HTTP Services │    │ • Authorization │    │ • Migrations    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
 ## 📋 **Prerequisites**
@@ -45,6 +46,8 @@ cd inventory-system
 
 ### **2. Setup**
 
+#### **Backend Setup**
+
 ```bash
 cd server
 dotnet restore
@@ -52,6 +55,16 @@ dotnet run
 ```
 
 The API will be available at `http://localhost:5184`
+
+#### **Frontend Setup**
+
+```bash
+cd client
+dotnet restore
+dotnet run
+```
+
+The client application will be available at `http://localhost:5000`
 
 ## 🔧 **Project Structure**
 
@@ -66,6 +79,13 @@ inventory-system/
 │   ├── Data/                 # EF Core Context
 │   ├── Migrations/           # Database Migrations
 │   └── Scripts/              # Database Scripts
+│
+├── 📁 client/                 # Frontend (Blazor WebAssembly)
+│   ├── Pages/                # Razor Pages/Components
+│   ├── Layout/               # Layout Components
+│   ├── Services/             # HTTP Services
+│   ├── Models/               # Client-side Models
+│   └── wwwroot/              # Static Assets
 │
 ├── 📁 docs/                   # Documentation
 ├── 📄 README.md              # This file
@@ -153,6 +173,60 @@ curl -X POST http://localhost:5184/api/auth/login \
 - Password: `admin123`
 - Role: `Admin`
 
+## 🖥️ **Frontend (Blazor WebAssembly)**
+
+### **🎨 Features**
+
+- ✅ **Blazor WebAssembly** - Modern SPA framework with C#
+- ✅ **MudBlazor UI** - Material Design component library
+- ✅ **JWT Authentication** - Secure token-based authentication
+- ✅ **HTTP Services** - Centralized API communication
+- ✅ **Responsive Design** - Mobile-friendly interface
+- ✅ **Component Architecture** - Reusable UI components
+- ✅ **State Management** - Efficient client-side state handling
+
+### **📱 User Interface**
+
+#### **🏠 Core Pages**
+
+| Page     | Route       | Description                  |
+| -------- | ----------- | ---------------------------- |
+| Home     | `/`         | Dashboard and overview       |
+| Products | `/products` | Product management interface |
+| Login    | `/login`    | User authentication          |
+
+#### **🧩 Components**
+
+- **MainLayout** - Application shell with navigation
+- **NavMenu** - Responsive navigation component
+- **AuthService** - Authentication state management
+- **ProductService** - Product data operations
+
+### **🔧 Technology Stack**
+
+- **Framework**: Blazor WebAssembly (.NET 9.0)
+- **UI Library**: MudBlazor 8.11.0
+- **HTTP Client**: System.Net.Http.Json
+- **Authentication**: JWT Bearer tokens
+- **Styling**: CSS with MudBlazor theming
+
+### **🚀 Development**
+
+```bash
+cd client
+
+# Restore packages
+dotnet restore
+
+# Run in development mode
+dotnet watch run
+
+# Build for production
+dotnet publish -c Release
+```
+
+The application includes hot reload for development and optimized builds for production deployment.
+
 ## 📊 **Database Schema**
 
 ### **Core Tables**
@@ -199,6 +273,20 @@ dotnet run                     # Start API server
 - `test-auth.http` - Authentication flow testing
 - `server.http` - General API testing
 
+### **Frontend Testing**
+
+```bash
+cd client
+dotnet run                     # Start client application
+```
+
+**Manual Testing:**
+
+1. Navigate to `http://localhost:5000`
+2. Login with default credentials (admin/admin123)
+3. Test product management features
+4. Verify responsive design on different screen sizes
+
 ## 🚀 **Deployment**
 
 ### **Backend Deployment**
@@ -207,6 +295,15 @@ dotnet run                     # Start API server
 cd server
 dotnet publish -c Release -o ./publish
 ```
+
+### **Frontend Deployment**
+
+```bash
+cd client
+dotnet publish -c Release -o ./publish
+```
+
+The published files can be hosted on any static web server or CDN. The Blazor WebAssembly application runs entirely in the browser.
 
 ### **Docker Support** _(Planned)_
 
@@ -227,15 +324,26 @@ docker-compose up -d           # Start all services
 
 ## 📈 **Roadmap**
 
-### **Phase 1: Core Backend** ✅ _COMPLETED_
+### **Phase 1: Core System** ✅ _COMPLETED_
 
-- [x] Authentication system
-- [x] Product management
+- [x] Backend API with authentication
+- [x] Product management system
 - [x] Inventory tracking
 - [x] User management
+- [x] Blazor WebAssembly frontend
+- [x] MudBlazor UI components
 - [x] API documentation
 
-### **Phase 2: Advanced Features** 📋 _PLANNED_
+### **Phase 2: Enhanced Frontend** 📋 _IN PROGRESS_
+
+- [ ] Advanced product filtering
+- [ ] Inventory dashboard with charts
+- [ ] Real-time updates
+- [ ] Mobile-optimized interface
+- [ ] Offline capabilities
+- [ ] Progressive Web App (PWA)
+
+### **Phase 3: Advanced Features** 🎯 _PLANNED_
 
 - [ ] Real-time notifications
 - [ ] Advanced reporting
@@ -264,9 +372,11 @@ We welcome contributions! Please follow these steps:
 
 ### **Development Guidelines**
 
-- Follow **C# coding conventions** for backend
+- Follow **C# coding conventions** for both backend and frontend
+- Use **MudBlazor components** for consistent UI design
 - Write **unit tests** for new features
 - Update **documentation** for API changes
+- Follow **Blazor best practices** for component development
 - Follow **commit message conventions**
 
 ---
@@ -274,6 +384,8 @@ We welcome contributions! Please follow these steps:
 <div align="center">
 
 [![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
+[![Blazor](https://img.shields.io/badge/Blazor-WebAssembly-512BD4?style=for-the-badge&logo=blazor)](https://blazor.net/)
+[![MudBlazor](https://img.shields.io/badge/MudBlazor-UI-594AE2?style=for-the-badge)](https://mudblazor.com/)
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server)](https://www.microsoft.com/sql-server)
 [![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens)](https://jwt.io/)
 
