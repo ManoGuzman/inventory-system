@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <!-- Disable Blazor component analyzer warnings that are false positives -->
+    <NoWarn>$(NoWarn);RZ10001;RZ10002;RZ9996</NoWarn>
+    <!-- Razor compiler settings -->
+    <RazorLangVersion>Latest</RazorLangVersion>
+    <RazorCompileOnBuild>true</RazorCompileOnBuild>
+  </PropertyGroup>
+</Project>

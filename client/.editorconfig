@@ -1,0 +1,14 @@
+root = true
+
+[*.{cs,razor}]
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.razor]
+# Suppress Blazor component warnings that are false positives
+dotnet_diagnostic.RZ10001.severity = none
+dotnet_diagnostic.RZ10002.severity = none
