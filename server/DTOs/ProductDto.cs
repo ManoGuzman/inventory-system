@@ -8,19 +8,19 @@ namespace Server.DTOs
         [Required]
         [StringLength(50)]
         public string Code { get; set; } = string.Empty;
-        
+
         [Required]
         [StringLength(100)]
         public string Name { get; set; } = string.Empty;
-        
+
         [Required]
         [StringLength(50)]
         public string Category { get; set; } = string.Empty;
-        
+
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Quantity must be non-negative")]
         public int Quantity { get; set; }
-        
+
         [Required]
         [StringLength(100)]
         public string Location { get; set; } = string.Empty;
@@ -30,16 +30,16 @@ namespace Server.DTOs
     {
         [StringLength(50)]
         public string? Code { get; set; }
-        
+
         [StringLength(100)]
         public string? Name { get; set; }
-        
+
         [StringLength(50)]
         public string? Category { get; set; }
-        
+
         [Range(0, int.MaxValue, ErrorMessage = "Quantity must be non-negative")]
         public int? Quantity { get; set; }
-        
+
         [StringLength(100)]
         public string? Location { get; set; }
     }
