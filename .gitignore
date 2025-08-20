@@ -443,3 +443,90 @@ ConnectionStrings.json
 # Temporary HTTP test files (keep main ones but ignore temp copies)
 *-temp.http
 *-backup.http
+
+# ================================
+# Frontend/Client Specific Rules
+# ================================
+
+# Blazor WebAssembly output
+client/bin/
+client/obj/
+client/wwwroot/dist/
+client/wwwroot/_framework/
+client/wwwroot/_content/
+
+# Blazor cache files
+client/**/*.blazor.g.cs
+client/**/blazor.boot.json
+client/**/blazor.webassembly.js
+
+# Client build artifacts
+client/**/*.dll
+client/**/*.pdb
+client/**/*.wasm
+client/**/*.dat
+client/**/*.blat
+
+# Source maps and debugging files
+client/wwwroot/**/*.map
+client/wwwroot/**/*.symbols
+
+# Blazor WebAssembly runtime files (auto-generated)
+client/wwwroot/_framework/**/*
+!client/wwwroot/_framework/.gitkeep
+
+# Client temporary files
+client/**/*.tmp
+client/**/*.cache
+client/**/tempCodeRunnerFile.*
+
+# Hot reload files
+client/**/*.runtimeconfig.dev.json
+client/**/*.deps.json
+
+# Client package restore
+client/**/project.assets.json
+client/**/project.nuget.cache
+client/**/*.nuget.props
+client/**/*.nuget.targets
+
+# Client IDE specific
+client/.vs/
+client/.vscode/settings.json
+client/.vscode/launch.json
+client/.vscode/tasks.json
+
+# Client publish profiles
+client/Properties/PublishProfiles/
+
+# Blazor WASM static web assets
+client/wwwroot/_content/**/*
+!client/wwwroot/_content/.gitkeep
+
+# Client configuration files (if sensitive)
+client/appsettings.*.json
+!client/appsettings.json
+!client/appsettings.Development.json
+
+# Client logs
+client/logs/
+client/**/*.log
+
+# Frontend package managers (if used in future)
+client/node_modules/
+client/package-lock.json
+client/yarn.lock
+client/.pnpm-lock.yaml
+
+# Client testing output
+client/TestResults/
+client/coverage/
+
+# Client performance profiling
+client/**/*.psess
+client/**/*.vsp
+client/**/*.vspx
+
+# Browser cache and debugging
+client/**/.chrome/
+client/**/.firefox/
