@@ -269,24 +269,6 @@ We welcome contributions! Please follow these steps:
 - Update **documentation** for API changes
 - Follow **commit message conventions**
 
-## 📄 **License**
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 **Support & Issues**
-
-- 📚 **Documentation**: Check this README and code comments
-- 🐛 **Bug Reports**: [Create an issue](https://github.com/manoguzman/inventory-system/issues)
-- 💡 **Feature Requests**: [Open a discussion](https://github.com/manoguzman/inventory-system/discussions)
-- 📧 **Contact**: manoguzman@example.com
-
-## 🙏 **Acknowledgments**
-
-- **ASP.NET Core Team** for the excellent framework
-- **Entity Framework** for ORM capabilities
-- **JWT.NET** for authentication tokens
-- **Open Source Contributors** who make this possible
-
 ---
 
 <div align="center">
