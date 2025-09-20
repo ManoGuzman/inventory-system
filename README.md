@@ -1,21 +1,34 @@
-# 📦 Inventory Management System
+# Inventory Management System
 
-A modern inventory management system built with **ASP.NET Core**, featuring JWT authentication, real-time inventory tracking, and comprehensive product management.
+A modern inventory management system built with \*_ASP.NET Core_### Features
 
-## 🌟 Overview
+- **JWT Authentication** with BCrypt password hashing
+- **RESTful API** with OpenAPI/Swagger documentation
+- **Entity Framework Core** with Code-First migrations
+- **Repository Pattern** for clean architecture
+- **Service Layer** for business logic separation
+- **Role-based Authorization** (Admin, Manager, User)
+- **In-Memory & SQL Server** database support
+- **CORS Configuration** for cross-origin requests
+
+### API Endpoints
+
+#### AuthenticationWT authentication, real-time inventory tracking, and comprehensive product management.
+
+## Overview
 
 This inventory management system provides a complete solution for businesses to track products, manage stock levels, and monitor inventory movements with a secure, role-based access control system.
 
-### 🎯 **Key Features**
+### Key Features
 
-- 🔐 **Secure Authentication** - JWT-based authentication with role management
-- 📊 **Real-time Inventory** - Live stock tracking and movement history
-- 🏷️ **Product Management** - Complete CRUD operations with categories and locations
-- 👥 **User Management** - Role-based access control (Admin, Manager, User)
+- **Secure Authentication** - JWT-based authentication with role management
+- **Real-time Inventory** - Live stock tracking and movement history
+- **Product Management** - Complete CRUD operations with categories and locations
+- **User Management** - Role-based access control (Admin, Manager, User)
 - **Advanced Search** - Filter and search products by multiple criteria
-- 📈 **Analytics Dashboard** - Insights into inventory trends and patterns
+- **Analytics Dashboard** - Insights into inventory trends and patterns
 
-## 🏗️ **System Architecture**
+## System Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -29,24 +42,24 @@ This inventory management system provides a complete solution for businesses to 
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## 📋 **Prerequisites**
+## Prerequisites
 
 - **.NET 9.0 SDK** or later
 - **SQL Server** (or SQL Server LocalDB)
 - **Visual Studio 2022** or **VS Code**
 
-## 🚀 **Quick Start**
+## Quick Start
 
-### **1. Clone the Repository**
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/manoguzman/inventory-system.git
 cd inventory-system
 ```
 
-### **2. Setup**
+### 2. Setup
 
-#### **Backend Setup**
+#### Backend Setup
 
 ```bash
 cd server
@@ -56,7 +69,7 @@ dotnet run
 
 The API will be available at `http://localhost:5184`
 
-#### **Frontend Setup**
+#### Frontend Setup
 
 ```bash
 cd client
@@ -66,11 +79,11 @@ dotnet run
 
 The client application will be available at `http://localhost:5000`
 
-## 🔧 **Project Structure**
+## Project Structure
 
 ```
 inventory-system/
-├── 📁 server/                 # Backend (ASP.NET Core)
+├── server/                    # Backend (ASP.NET Core)
 │   ├── Controllers/           # API Controllers
 │   ├── Services/             # Business Logic
 │   ├── Repositories/         # Data Access Layer
@@ -80,21 +93,21 @@ inventory-system/
 │   ├── Migrations/           # Database Migrations
 │   └── Scripts/              # Database Scripts
 │
-├── 📁 client/                 # Frontend (Blazor WebAssembly)
+├── client/                    # Frontend (Blazor WebAssembly)
 │   ├── Pages/                # Razor Pages/Components
 │   ├── Layout/               # Layout Components
 │   ├── Services/             # HTTP Services
 │   ├── Models/               # Client-side Models
 │   └── wwwroot/              # Static Assets
 │
-├── 📁 docs/                   # Documentation
-├── 📄 README.md              # This file
-└── 📄 .gitignore             # Git ignore rules
+├── docs/                      # Documentation
+├── README.md                  # This file
+└── .gitignore                # Git ignore rules
 ```
 
-## 🖥️ **Backend (ASP.NET Core)**
+## Backend (ASP.NET Core)
 
-### **🔥 Features**
+### Features
 
 - ✅ **JWT Authentication** with BCrypt password hashing
 - ✅ **RESTful API** with OpenAPI/Swagger documentation
@@ -116,7 +129,7 @@ inventory-system/
 | `GET`  | `/api/auth/verify` | Verify token validity |
 | `POST` | `/api/auth/logout` | User logout           |
 
-#### **📦 Products**
+#### Products
 
 | Method   | Endpoint             | Description        |
 | -------- | -------------------- | ------------------ |
@@ -126,7 +139,7 @@ inventory-system/
 | `PUT`    | `/api/products/{id}` | Update product     |
 | `DELETE` | `/api/products/{id}` | Delete product     |
 
-#### **📊 Inventory**
+#### Inventory
 
 | Method | Endpoint                   | Description               |
 | ------ | -------------------------- | ------------------------- |
@@ -134,7 +147,7 @@ inventory-system/
 | `POST` | `/api/inventory/movement`  | Record inventory movement |
 | `GET`  | `/api/inventory/low-stock` | Get low stock products    |
 
-### **🔧 Configuration**
+### Configuration
 
 **Database Configuration** (`appsettings.json`):
 
@@ -153,7 +166,7 @@ inventory-system/
 }
 ```
 
-### **🧪 Testing the Backend**
+### Testing the Backend
 
 ```bash
 cd server
@@ -173,21 +186,21 @@ curl -X POST http://localhost:5184/api/auth/login \
 - Password: `admin123`
 - Role: `Admin`
 
-## 🖥️ **Frontend (Blazor WebAssembly)**
+## Frontend (Blazor WebAssembly)
 
-### **🎨 Features**
+### Features
 
-- ✅ **Blazor WebAssembly** - Modern SPA framework with C#
-- ✅ **MudBlazor UI** - Material Design component library
-- ✅ **JWT Authentication** - Secure token-based authentication
-- ✅ **HTTP Services** - Centralized API communication
-- ✅ **Responsive Design** - Mobile-friendly interface
-- ✅ **Component Architecture** - Reusable UI components
-- ✅ **State Management** - Efficient client-side state handling
+- **Blazor WebAssembly** - Modern SPA framework with C#
+- **MudBlazor UI** - Material Design component library
+- **JWT Authentication** - Secure token-based authentication
+- **HTTP Services** - Centralized API communication
+- **Responsive Design** - Mobile-friendly interface
+- **Component Architecture** - Reusable UI components
+- **State Management** - Efficient client-side state handling
 
-### **📱 User Interface**
+### User Interface
 
-#### **🏠 Core Pages**
+#### Core Pages
 
 | Page     | Route       | Description                  |
 | -------- | ----------- | ---------------------------- |
@@ -195,14 +208,14 @@ curl -X POST http://localhost:5184/api/auth/login \
 | Products | `/products` | Product management interface |
 | Login    | `/login`    | User authentication          |
 
-#### **🧩 Components**
+#### Components
 
 - **MainLayout** - Application shell with navigation
 - **NavMenu** - Responsive navigation component
 - **AuthService** - Authentication state management
 - **ProductService** - Product data operations
 
-### **🔧 Technology Stack**
+### Technology Stack
 
 - **Framework**: Blazor WebAssembly (.NET 9.0)
 - **UI Library**: MudBlazor 8.11.0
@@ -210,7 +223,7 @@ curl -X POST http://localhost:5184/api/auth/login \
 - **Authentication**: JWT Bearer tokens
 - **Styling**: CSS with MudBlazor theming
 
-### **🚀 Development**
+### Development
 
 ```bash
 cd client
@@ -227,9 +240,9 @@ dotnet publish -c Release
 
 The application includes hot reload for development and optimized builds for production deployment.
 
-## 📊 **Database Schema**
+## Database Schema
 
-### **Core Tables**
+### Core Tables
 
 ```sql
 Users
@@ -258,9 +271,9 @@ Movements
 └── Date
 ```
 
-## 🧪 **Testing**
+## Testing
 
-### **Backend Testing**
+### Backend Testing
 
 ```bash
 cd server
@@ -273,7 +286,7 @@ dotnet run                     # Start API server
 - `test-auth.http` - Authentication flow testing
 - `server.http` - General API testing
 
-### **Frontend Testing**
+### Frontend Testing
 
 ```bash
 cd client
@@ -287,16 +300,16 @@ dotnet run                     # Start client application
 3. Test product management features
 4. Verify responsive design on different screen sizes
 
-## 🚀 **Deployment**
+## Deployment
 
-### **Backend Deployment**
+### Backend Deployment
 
 ```bash
 cd server
 dotnet publish -c Release -o ./publish
 ```
 
-### **Frontend Deployment**
+### Frontend Deployment
 
 ```bash
 cd client
@@ -305,26 +318,26 @@ dotnet publish -c Release -o ./publish
 
 The published files can be hosted on any static web server or CDN. The Blazor WebAssembly application runs entirely in the browser.
 
-### **Docker Support** _(Planned)_
+### Docker Support (Planned)
 
 ```bash
 docker-compose up -d           # Start all services
 ```
 
-## 🔐 **Security Features**
+## Security Features
 
-- ✅ **JWT Authentication** with secure token generation
-- ✅ **BCrypt Password Hashing** for user credentials
-- ✅ **Role-based Authorization** for endpoint protection
-- ✅ **CORS Configuration** for secure cross-origin requests
-- ✅ **Input Validation** with data annotations
-- 🔲 **Rate Limiting** (planned)
-- 🔲 **API Key Authentication** (planned)
-- 🔲 **Audit Logging** (planned)
+- **JWT Authentication** with secure token generation
+- **BCrypt Password Hashing** for user credentials
+- **Role-based Authorization** for endpoint protection
+- **CORS Configuration** for secure cross-origin requests
+- **Input Validation** with data annotations
+- Rate Limiting (planned)
+- API Key Authentication (planned)
+- Audit Logging (planned)
 
-## 📈 **Roadmap**
+## Roadmap
 
-### **Phase 1: Core System** ✅ _COMPLETED_
+### Phase 1: Core System - COMPLETED
 
 - [x] Backend API with authentication
 - [x] Product management system
@@ -334,7 +347,7 @@ docker-compose up -d           # Start all services
 - [x] MudBlazor UI components
 - [x] API documentation
 
-### **Phase 2: Enhanced Frontend** 📋 _IN PROGRESS_
+### Phase 2: Enhanced Frontend - IN PROGRESS
 
 - [ ] Advanced product filtering
 - [ ] Inventory dashboard with charts
@@ -343,7 +356,7 @@ docker-compose up -d           # Start all services
 - [ ] Offline capabilities
 - [ ] Progressive Web App (PWA)
 
-### **Phase 3: Advanced Features** 🎯 _PLANNED_
+### Phase 3: Advanced Features - PLANNED
 
 - [ ] Real-time notifications
 - [ ] Advanced reporting
@@ -352,7 +365,7 @@ docker-compose up -d           # Start all services
 - [ ] API rate limiting
 - [ ] Automated testing
 
-### **Phase 3: Production Features** 🎯 _FUTURE_
+### Phase 3: Production Features - FUTURE
 
 - [ ] Docker containerization
 - [ ] CI/CD pipeline
@@ -360,7 +373,7 @@ docker-compose up -d           # Start all services
 - [ ] Monitoring & logging
 - [ ] Performance optimization
 
-## 🤝 **Contributing**
+## Contributing
 
 We welcome contributions! Please follow these steps:
 
@@ -370,7 +383,7 @@ We welcome contributions! Please follow these steps:
 4. **Push** to the branch (`git push origin feature/amazing-feature`)
 5. **Open** a Pull Request
 
-### **Development Guidelines**
+### Development Guidelines
 
 - Follow **C# coding conventions** for both backend and frontend
 - Use **MudBlazor components** for consistent UI design
