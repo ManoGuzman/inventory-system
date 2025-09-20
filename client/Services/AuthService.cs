@@ -1,42 +1,104 @@
 using client.Models;
 using System.Net.Http.Json;
-
 namespace client.Services;
 
+/// <summary>
+/// Service for handling authentication operations
+/// </summary>
 public class AuthService
 {
     private readonly HttpClient _httpClient;
+    private const string BaseUrl = "https://localhost:5001/api/auth";
 
     public AuthService(HttpClient httpClient)
     {
-        _httpClient = httpClient;
+        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
     }
 
-    public async Task<ApiResponse<LoginResponse>> LoginAsync(LoginRequest request)
+    /// <summary>
+    /// Authenticates a user with email and password
+    /// </summary>
+    /// <param name="request">Login credentials</param>
+    /// <returns>True if authentication successful, false otherwise</returns>
+    public async Task<bool> LoginAsync(LoginRequest request)
+    {
+        if (request == null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+        {
+            return false;
+        }
+
+        try
+        {
+            var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/login", request);
+            return response.IsSuccessStatusCode;
+        }
+        catch (HttpRequestException)
+        {
+            return false;
+        }
+        catch (TaskCanceledException)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Registers a new user account
+    /// </summary>
+    /// <param name="request">Registration details</param>
+    /// <returns>True if registration successful, false otherwise</returns>
+    public async Task<bool> RegisterAsync(RegisterRequest request)
+    {
+        if (request == null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Email) ||
+            string.IsNullOrWhiteSpace(request.Password) ||
+            string.IsNullOrWhiteSpace(request.FirstName) ||
+            string.IsNullOrWhiteSpace(request.LastName))
+        {
+            return false;
+        }
+
+        try
+        {
+            var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/register", request);
+            return response.IsSuccessStatusCode;
+        }
+        catch (HttpRequestException)
+        {
+            return false;
+        }
+        catch (TaskCanceledException)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Logs out the current user
+    /// </summary>
+    /// <returns>Task representing the logout operation</returns>
+    public async Task LogoutAsync()
     {
         try
         {
-            var response = await _httpClient.PostAsJsonAsync("api/auth/login", request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
-                return result ?? new ApiResponse<LoginResponse> { Success = false, Message = "Invalid response" };
-            }
-
-            return new ApiResponse<LoginResponse>
-            {
-                Success = false,
-                Message = "Authentication failed"
-            };
+            await _httpClient.PostAsync($"{BaseUrl}/logout", null);
         }
-        catch (Exception ex)
+        catch (HttpRequestException)
         {
-            return new ApiResponse<LoginResponse>
-            {
-                Success = false,
-                Message = $"Error: {ex.Message}"
-            };
+            // Silent fail for logout
+        }
+        catch (TaskCanceledException)
+        {
+            // Silent fail for logout
         }
     }
 
