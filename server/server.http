@@ -1,54 +1,91 @@
 @hostAddress = http://localhost:5184
+@auth_token = YOUR_JWT_TOKEN_HERE
+@admin_token = YOUR_ADMIN_JWT_TOKEN_HERE
 
-### Get all products
+### Server API Tests
+### Instructions:
+### 1. First run the login request in test-auth.http to get JWT tokens
+### 2. Replace YOUR_JWT_TOKEN_HERE with actual tokens from login response
+### 3. Base URL: {{hostAddress}}
+
+### Health Check (if implemented)
+# GET {{hostAddress}}/api/health
+
+### Products API Tests
+
+### 1. Get All Products
 GET {{hostAddress}}/api/products
+Authorization: Bearer {{auth_token}}
 
-### Get a specific product
+### 2. Get Product by ID
 GET {{hostAddress}}/api/products/1
+Authorization: Bearer {{auth_token}}
 
-### Get product by code
-GET {{hostAddress}}/api/products/code/ELEC001
-
-### Get all categories
-GET {{hostAddress}}/api/products/categories
-
-### Get products by category
-GET {{hostAddress}}/api/products/category/Electronics
-
-### Create a new product
+### 3. Create New Product
 POST {{hostAddress}}/api/products
 Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
 {
   "code": "TEST001",
   "name": "Test Product",
-  "category": "Test Category",
-  "quantity": 50,
-  "location": "Test Location"
+  "category": "Electronics",
+  "quantity": 100,
+  "location": "Warehouse A"
 }
 
-### Get all movements
-GET {{hostAddress}}/api/inventory/movements
+### 4. Update Product
+PUT {{hostAddress}}/api/products/1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
-### Get movements for a product
-GET {{hostAddress}}/api/inventory/movements/1
+{
+  "id": 1,
+  "code": "TEST001",
+  "name": "Updated Test Product",
+  "category": "Electronics",
+  "quantity": 150,
+  "location": "Warehouse B"
+}
 
-### Create a movement (stock in)
+### 5. Delete Product
+DELETE {{hostAddress}}/api/products/1
+Authorization: Bearer {{auth_token}}
+
+### Inventory API Tests
+
+### 6. Get Inventory Movements
+GET {{hostAddress}}/api/inventory
+Authorization: Bearer {{auth_token}}
+
+### 7. Record Inventory Movement
 POST {{hostAddress}}/api/inventory/movement
 Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
 {
   "productId": 1,
   "movementType": "In",
-  "quantity": 5
+  "quantity": 50
 }
 
-### Create a movement (stock out)
-POST {{hostAddress}}/api/inventory/movement
-Content-Type: application/json
+### 8. Get Low Stock Products
+GET {{hostAddress}}/api/inventory/low-stock
+Authorization: Bearer {{auth_token}}
 
-{
-  "productId": 1,
-  "movementType": "Out",
-  "quantity": 2
-}
+### Note: The following User Management endpoints may not be implemented
+### Check your controllers for available endpoints
+
+### Authentication Tests (Available endpoints)
+
+### 9. Get Current User
+GET {{hostAddress}}/api/auth/me
+Authorization: Bearer {{auth_token}}
+
+### 10. Verify Token
+GET {{hostAddress}}/api/auth/verify
+Authorization: Bearer {{auth_token}}
+
+### 11. Logout
+POST {{hostAddress}}/api/auth/logout
+Authorization: Bearer {{auth_token}}

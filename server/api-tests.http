@@ -1,0 +1,150 @@
+@hostAddress = http://localhost:5184
+@auth_token = YOUR_JWT_TOKEN_HERE
+@admin_token = YOUR_ADMIN_JWT_TOKEN_HERE
+
+### Comprehensive API Tests for Inventory Management System
+### Base URL: {{hostAddress}}
+
+### Prerequisites: 
+### 1. Run the server application
+### 2. Execute login request first to get JWT token
+### 3. Replace YOUR_JWT_TOKEN_HERE with actual token from login response
+
+### Authentication Tests
+
+### Login as Admin
+# @name loginAdmin
+POST {{hostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### Login as Manager  
+POST {{hostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "manager", 
+  "password": "manager123"
+}
+
+### Login as User
+POST {{hostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "user123"
+}
+
+### Verify Token
+GET {{hostAddress}}/api/auth/verify
+Authorization: Bearer {{auth_token}}
+
+### Get Current User
+GET {{hostAddress}}/api/auth/me
+Authorization: Bearer {{auth_token}}
+
+### Product Management Tests
+
+### Get All Products
+GET {{hostAddress}}/api/products
+Authorization: Bearer {{auth_token}}
+
+### Get Product by ID
+GET {{hostAddress}}/api/products/1
+Authorization: Bearer {{auth_token}}
+
+### Create New Product
+POST {{hostAddress}}/api/products
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "code": "LAPTOP001",
+  "name": "Business Laptop",
+  "category": "Electronics",
+  "quantity": 25,
+  "location": "Warehouse A"
+}
+
+### Update Product
+PUT {{hostAddress}}/api/products/1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id": 1,
+  "code": "LAPTOP001",
+  "name": "Updated Business Laptop",
+  "category": "Electronics", 
+  "quantity": 30,
+  "location": "Warehouse B"
+}
+
+### Delete Product
+DELETE {{hostAddress}}/api/products/1
+Authorization: Bearer {{auth_token}}
+
+### Inventory Management Tests
+
+### Get Inventory Movements
+GET {{hostAddress}}/api/inventory
+Authorization: Bearer {{auth_token}}
+
+### Record Inventory Movement - Stock In
+POST {{hostAddress}}/api/inventory/movement
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "productId": 1,
+  "movementType": "In",
+  "quantity": 100,
+  "notes": "Initial stock"
+}
+
+### Record Inventory Movement - Stock Out
+POST {{hostAddress}}/api/inventory/movement
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "productId": 1,
+  "movementType": "Out", 
+  "quantity": 25,
+  "notes": "Sales order"
+}
+
+### Get Low Stock Products
+GET {{hostAddress}}/api/inventory/low-stock
+Authorization: Bearer {{auth_token}}
+
+### Error Testing
+
+### Test Invalid Login
+POST {{hostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "invalid",
+  "password": "wrong"
+}
+
+### Test Unauthorized Access
+GET {{hostAddress}}/api/products
+
+### Test Invalid Product Creation
+POST {{hostAddress}}/api/products
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "code": "",
+  "name": "",
+  "category": "",
+  "quantity": -1
+}

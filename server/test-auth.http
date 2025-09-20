@@ -1,44 +1,55 @@
-### Test JWT Authentication Endpoints
-@token = 'Hello'
 @hostAddress = http://localhost:5184
+@auth_token = YOUR_JWT_TOKEN_HERE
 
-### 1. Login with admin user (admin user is defined in server/database seed data; verify in seed file or database)
+### Authentication API Tests
+### Base URL: {{hostAddress}}
+
+### 1. User Login - Admin
+# @name loginAdmin
 POST {{hostAddress}}/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "admin",
-    "password": "admin123"
+  "username": "admin",
+  "password": "admin123"
 }
 
-> {%
-client.global.set("token", response.body.token);
-%}
-
-### 2. Get current user info (requires token from login)
-GET {{hostAddress}}/api/auth/me
-Authorization: Bearer {{token}}
-
-### 3. Try to access protected products endpoint without token (should fail)
-GET {{hostAddress}}/api/products
-
-### 4. Try to access protected products endpoint with token (should work)
-GET {{hostAddress}}/api/products
-Authorization: Bearer {{token}}
-
-### 5. Try to access protected inventory endpoint with token
-GET {{hostAddress}}/api/inventory
-Authorization: Bearer {{token}}
-
-### 6. Create a new product (protected endpoint)
-POST {{hostAddress}}/api/products
-Authorization: Bearer {{token}}
+### 2. User Login - Invalid Credentials
+POST {{hostAddress}}/api/auth/login
 Content-Type: application/json
 
 {
-    "name": "Test Product JWT",
-    "description": "Product created via JWT authenticated request",
-    "price": 29.99,
-    "quantity": 100,
-    "category": "Electronics"
+  "username": "invalid",
+  "password": "wrong"
+}
+
+### 3. Get Current User Info (requires valid JWT token)
+### Replace YOUR_JWT_TOKEN_HERE with token from login response
+GET {{hostAddress}}/api/auth/me
+Authorization: Bearer {{auth_token}}
+
+### 4. Verify Token (requires valid JWT token)
+GET {{hostAddress}}/api/auth/verify
+Authorization: Bearer {{auth_token}}
+
+### 5. User Logout (requires valid JWT token)
+POST {{hostAddress}}/api/auth/logout
+Authorization: Bearer {{auth_token}}
+
+### 6. Test Manager Login
+POST {{hostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "manager",
+  "password": "manager123"
+}
+
+### 7. Test User Login
+POST {{hostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "user123"
 }
