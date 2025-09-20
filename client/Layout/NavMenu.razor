@@ -1,25 +1,55 @@
-﻿<MudNavMenu>
-    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="Icons.Material.Filled.Dashboard">
-        Dashboard
-    </MudNavLink>
-    <MudNavLink Href="/products" Icon="Icons.Material.Filled.Inventory">
-        Products
-    </MudNavLink>
-    <MudNavLink Href="/inventory" Icon="Icons.Material.Filled.SwapHoriz">
-        Inventory Movements
-    </MudNavLink>
-    <MudNavLink Href="/users" Icon="Icons.Material.Filled.People">
-        User Management
-    </MudNavLink>
-    <MudNavGroup title="Reports" Icon="Icons.Material.Filled.Assessment" Expanded="false">
-        <MudNavLink Href="/reports/stock" Icon="Icons.Material.Filled.Inventory2">
-            Stock Report
-        </MudNavLink>
-        <MudNavLink Href="/reports/movements" Icon="Icons.Material.Filled.TrendingUp">
-            Movement Report
-        </MudNavLink>
-    </MudNavGroup>
-    <MudNavLink Href="/settings" Icon="Icons.Material.Filled.Settings">
-        Settings
-    </MudNavLink>
-</MudNavMenu>
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="/" title="Inventory System Home">
+            Inventory System
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                @onclick="ToggleNavMenu"
+                aria-controls="navbarNav"
+                aria-expanded="@(!collapseNavMenu)"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="@NavMenuCssClass navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link @GetActiveClass("")"
+                       href="/"
+                       title="Dashboard">
+                        <span class="nav-icon" aria-hidden="true">[HOME]</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @GetActiveClass("products")"
+                       href="/products"
+                       title="Product Management">
+                        <span class="nav-icon" aria-hidden="true">[PROD]</span>
+                        Products
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : string.Empty;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private static string GetActiveClass(string route)
+    {
+        // This would require NavigationManager in a real implementation
+        // For now, return empty string
+        return string.Empty;
+    }
+}

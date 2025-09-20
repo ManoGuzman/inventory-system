@@ -1,147 +1,111 @@
 ﻿@page "/"
 
-<PageTitle>Dashboard - Inventory System</PageTitle>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-4 text-primary">Welcome to Inventory System</h1>
+            <p class="lead">
+                A modern inventory management system built with Blazor WebAssembly for efficient product tracking and management.
+            </p>
+        </div>
+    </div>
 
-<MudGrid>
-    <MudItem xs="12">
-        <MudText Typo="Typo.h3" GutterBottom="true">📦 Dashboard</MudText>
-        <MudText Typo="Typo.body1" Class="mb-4">Welcome to your inventory management system</MudText>
-    </MudItem>
+    <!-- Dashboard Statistics -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-muted">Total Products</h5>
+                    <h2 class="text-primary fw-bold">1,247</h2>
+                    <small class="text-muted">Active inventory items</small>
+                </div>
+            </div>
+        </div>
 
-    <!-- Stats Cards -->
-    <MudItem xs="12" sm="6" md="3">
-        <MudCard Elevation="2">
-            <MudCardContent>
-                <div class="d-flex align-center">
-                    <MudIcon Icon="Icons.Material.Filled.Inventory" Size="Size.Large" Color="Color.Primary"
-                        Class="mr-3" />
-                    <div>
-                        <MudText Typo="Typo.h4">1,247</MudText>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">Total Products</MudText>
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-muted">Stock In Today</h5>
+                    <h2 class="text-success fw-bold">342</h2>
+                    <small class="text-muted">Items received today</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-muted">Stock Out Today</h5>
+                    <h2 class="text-warning fw-bold">89</h2>
+                    <small class="text-muted">Items shipped today</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-muted">Low Stock Items</h5>
+                    <h2 class="text-danger fw-bold">23</h2>
+                    <small class="text-muted">Items need restocking</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">System Features</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="text-success">✓</i> Product Management
+                                </li>
+                                <li class="mb-2">
+                                    <i class="text-success">✓</i> Inventory Tracking
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="text-success">✓</i> User Authentication
+                                </li>
+                                <li class="mb-2">
+                                    <i class="text-success">✓</i> Movement History
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
+            </div>
+        </div>
 
-    <MudItem xs="12" sm="6" md="3">
-        <MudCard Elevation="2">
-            <MudCardContent>
-                <div class="d-flex align-center">
-                    <MudIcon Icon="Icons.Material.Filled.TrendingUp" Size="Size.Large" Color="Color.Success"
-                        Class="mr-3" />
-                    <div>
-                        <MudText Typo="Typo.h4">342</MudText>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">Stock In Today</MudText>
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/products" class="btn btn-outline-primary">
+                            View Products
+                        </a>
+                        <button class="btn btn-outline-success" type="button">
+                            Add New Product
+                        </button>
+                        <button class="btn btn-outline-info" type="button">
+                            Generate Report
+                        </button>
                     </div>
                 </div>
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
-
-    <MudItem xs="12" sm="6" md="3">
-        <MudCard Elevation="2">
-            <MudCardContent>
-                <div class="d-flex align-center">
-                    <MudIcon Icon="Icons.Material.Filled.TrendingDown" Size="Size.Large" Color="Color.Warning"
-                        Class="mr-3" />
-                    <div>
-                        <MudText Typo="Typo.h4">128</MudText>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">Stock Out Today</MudText>
-                    </div>
-                </div>
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
-
-    <MudItem xs="12" sm="6" md="3">
-        <MudCard Elevation="2">
-            <MudCardContent>
-                <div class="d-flex align-center">
-                    <MudIcon Icon="Icons.Material.Filled.Warning" Size="Size.Large" Color="Color.Error" Class="mr-3" />
-                    <div>
-                        <MudText Typo="Typo.h4">23</MudText>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">Low Stock Items</MudText>
-                    </div>
-                </div>
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
-
-    <!-- Recent Activity -->
-    <MudItem xs="12" md="8">
-        <MudCard Elevation="2">
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">Recent Inventory Movements</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                <MudTable Items="@recentMovements" Hover="true" Dense="true" FixedHeader="true" Height="300px">
-                    <HeaderContent>
-                        <MudTh>Product</MudTh>
-                        <MudTh>Type</MudTh>
-                        <MudTh>Quantity</MudTh>
-                        <MudTh>Date</MudTh>
-                    </HeaderContent>
-                    <RowTemplate>
-                        <MudTd DataLabel="Product">@context.ProductName</MudTd>
-                        <MudTd DataLabel="Type">
-                            <MudChip T="string" Size="Size.Small"
-                                Color="@(context.MovementType == MovementType.In ? Color.Success : Color.Warning)">
-                                @context.MovementType
-                            </MudChip>
-                        </MudTd>
-                        <MudTd DataLabel="Quantity">@context.Quantity</MudTd>
-                        <MudTd DataLabel="Date">@context.Date.ToString("MMM dd, HH:mm")</MudTd>
-                    </RowTemplate>
-                </MudTable>
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
-
-    <!-- Quick Actions -->
-    <MudItem xs="12" md="4">
-        <MudCard Elevation="2">
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">Quick Actions</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                <MudStack Spacing="2">
-                    <MudButton StartIcon="Icons.Material.Filled.Add" Color="Color.Primary" Variant="Variant.Filled"
-                        FullWidth="true">
-                        Add New Product
-                    </MudButton>
-                    <MudButton StartIcon="Icons.Material.Filled.SwapHoriz" Color="Color.Secondary"
-                        Variant="Variant.Outlined" FullWidth="true">
-                        Record Movement
-                    </MudButton>
-                    <MudButton StartIcon="Icons.Material.Filled.Assessment" Color="Color.Tertiary"
-                        Variant="Variant.Outlined" FullWidth="true">
-                        Generate Report
-                    </MudButton>
-                    <MudButton StartIcon="Icons.Material.Filled.Search" Color="Color.Info" Variant="Variant.Outlined"
-                        FullWidth="true">
-                        Search Inventory
-                    </MudButton>
-                </MudStack>
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
-</MudGrid>
-
-@code {
-    private List<MovementDto> recentMovements = new()
-{
-new MovementDto { ProductName = "Laptop Dell XPS", MovementType = MovementType.In, Quantity = 10, Date =
-DateTime.Now.AddHours(-2) },
-new MovementDto { ProductName = "Monitor Samsung", MovementType = MovementType.Out, Quantity = 5, Date =
-DateTime.Now.AddHours(-1) },
-new MovementDto { ProductName = "Keyboard Logitech", MovementType = MovementType.In, Quantity = 25, Date =
-DateTime.Now.AddMinutes(-30) },
-new MovementDto { ProductName = "Mouse Wireless", MovementType = MovementType.Out, Quantity = 8, Date =
-DateTime.Now.AddMinutes(-15) },
-};
-}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,88 +1,99 @@
 @page "/products"
-@using MudBlazor
 @inject ProductService ProductService
-@inject ISnackbar Snackbar
 
-<PageTitle>Products - Inventory System</PageTitle>
+<h1>Products</h1>
 
-<MudGrid>
-    <MudItem xs="12">
-        <div class="d-flex justify-space-between align-center mb-4">
-            <MudText Typo="Typo.h3">📦 Products</MudText>
-            <MudButton StartIcon="Icons.Material.Filled.Add" Color="Color.Primary" Variant="Variant.Filled"
-                OnClick="@(() => OpenCreateDialog())">
-                Add Product
-            </MudButton>
+<div class="row mb-3">
+    <div class="col">
+        <button class="btn btn-primary" type="button" title="Add new product">
+            Add Product
+        </button>
+    </div>
+</div>
+
+@if (isLoading)
+{
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading products...</span>
         </div>
-    </MudItem>
-
-    <MudItem xs="12">
-        <MudCard>
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">Product Inventory</MudText>
-                </CardHeaderContent>
-                <CardHeaderActions>
-                    <MudTextField @bind-Value="searchString" Placeholder="Search products..."
-                        Adornment="Adornment.Start" AdornmentIcon="Icons.Material.Filled.Search" IconSize="Size.Medium"
-                        Class="mt-0" Immediate="true"
-                        @oninput="@(async (e) => { searchString = e.Value?.ToString() ?? string.Empty; FilterProducts(); })" />
-                </CardHeaderActions>
-            </MudCardHeader>
-            <MudCardContent>
-                @if (loading)
+    </div>
+}
+else if (hasError)
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> Unable to load products. Please try again later.
+        <button class="btn btn-outline-danger btn-sm ms-2" @onclick="LoadProducts">
+            Retry
+        </button>
+    </div>
+}
+else if (products == null || !products.Any())
+{
+    <div class="alert alert-info" role="alert">
+        No products found. Click "Add Product" to create your first product.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Category</th>
+                    <th scope="col" style="width: 150px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in products)
                 {
-                    <div class="d-flex justify-center">
-                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
-                    </div>
+                    <tr>
+                        <td>
+                            <strong>@product.Name</strong>
+                        </td>
+                        <td>
+                            <span class="text-muted">@(string.IsNullOrEmpty(product.Description) ? "No description" : product.Description)</span>
+                        </td>
+                        <td>
+                            <span class="fw-bold text-success">@product.Price.ToString("C")</span>
+                        </td>
+                        <td>
+                            <span class="badge @(product.Quantity < 10 ? "bg-warning" : "bg-success")">
+                                @product.Quantity
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">@(string.IsNullOrEmpty(product.Category) ? "Uncategorized" : product.Category)</span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-sm btn-outline-primary"
+                                        @onclick="() => EditProduct(product)"
+                                        title="Edit product">
+                                    Edit
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger"
+                                        @onclick="() => DeleteProduct(product.Id)"
+                                        title="Delete product">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
                 }
-                else
-                {
-                    <MudTable Items="@filteredProducts" Hover="true" FixedHeader="true" Height="500px" Dense="false">
-                        <HeaderContent>
-                            <MudTh>Code</MudTh>
-                            <MudTh>Name</MudTh>
-                            <MudTh>Category</MudTh>
-                            <MudTh>Quantity</MudTh>
-                            <MudTh>Location</MudTh>
-                            <MudTh>Registration Date</MudTh>
-                            <MudTh>Actions</MudTh>
-                        </HeaderContent>
-                        <RowTemplate>
-                            <MudTd DataLabel="Code">@context.Code</MudTd>
-                            <MudTd DataLabel="Name">@context.Name</MudTd>
-                            <MudTd DataLabel="Category">
-                                <MudChip T="string" Size="Size.Small" Color="Color.Info">@context.Category</MudChip>
-                            </MudTd>
-                            <MudTd DataLabel="Quantity">
-                                <MudChip T="string" Size="Size.Small"
-                                    Color="@(context.Quantity > 10 ? Color.Success : context.Quantity > 5 ? Color.Warning : Color.Error)">
-                                    @context.Quantity
-                                </MudChip>
-                            </MudTd>
-                            <MudTd DataLabel="Location">@context.Location</MudTd>
-                            <MudTd DataLabel="Registration Date">@context.RegistrationDate.ToString("MMM dd, yyyy")</MudTd>
-                            <MudTd DataLabel="Actions">
-                                <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
-                                    <MudIconButton Icon="Icons.Material.Filled.Edit"
-                                        OnClick="@(() => EditProduct(context))" />
-                                    <MudIconButton Icon="Icons.Material.Filled.Delete" Color="Color.Error"
-                                        OnClick="@(() => DeleteProduct(context))" />
-                                </MudButtonGroup>
-                            </MudTd>
-                        </RowTemplate>
-                    </MudTable>
-                }
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
-</MudGrid>
+            </tbody>
+        </table>
+    </div>
+}
 
 @code {
-    private List<ProductDto> products = new();
-    private List<ProductDto> filteredProducts = new();
-    private bool loading = true;
-    private string searchString = string.Empty;
+    private List<ProductDto>? products;
+    private bool isLoading = true;
+    private bool hasError = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -91,54 +102,57 @@
 
     private async Task LoadProducts()
     {
-        loading = true;
-        var response = await ProductService.GetProductsAsync();
-
-        if (response.Success && response.Data != null)
+        try
         {
-            products = response.Data;
-            filteredProducts = products;
-        }
-        else
-        {
-            Snackbar.Add(response.Message, Severity.Error);
-        }
+            isLoading = true;
+            hasError = false;
+            StateHasChanged();
 
-        loading = false;
-        StateHasChanged();
+            products = await ProductService.GetProductsAsync();
+        }
+        catch (Exception)
+        {
+            hasError = true;
+            products = new List<ProductDto>();
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
     }
 
-    private void FilterProducts()
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-        {
-            filteredProducts = products;
-        }
-        else
-        {
-            filteredProducts = products.Where(p =>
-            p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            p.Code.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            p.Category.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-        }
-        StateHasChanged();
-    }
-    private void OpenCreateDialog()
-    {
-        // TODO: Implement create dialog
-        Snackbar.Add("Create product dialog will be implemented", Severity.Info);
-    }
-
-    private void EditProduct(ProductDto product)
+    private async Task EditProduct(ProductDto product)
     {
         // TODO: Implement edit dialog
-        Snackbar.Add($"Edit {product.Name} dialog will be implemented", Severity.Info);
+        await Task.CompletedTask;
     }
 
-    private void DeleteProduct(ProductDto product)
+    private async Task DeleteProduct(int productId)
     {
-        // TODO: Implement confirmation dialog
-        Snackbar.Add($"Delete {product.Name} confirmation will be implemented", Severity.Warning);
+        if (productId <= 0) return;
+
+        // TODO: Add confirmation dialog
+        var confirmed = true; // Replace with actual confirmation
+
+        if (confirmed)
+        {
+            try
+            {
+                var success = await ProductService.DeleteProductAsync(productId);
+                if (success)
+                {
+                    await LoadProducts();
+                }
+                else
+                {
+                    // TODO: Show error message to user
+                }
+            }
+            catch (Exception)
+            {
+                // TODO: Show error message to user
+            }
+        }
     }
 }

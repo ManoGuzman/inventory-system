@@ -1,34 +1,19 @@
-﻿@inherits LayoutComponentBase
-@using MudBlazor
-@using MudBlazor.Components
+﻿@inherits LayoutView
 
-<MudLayout>
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
-            OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-        <MudText Typo="Typo.h5" Class="ml-3">📦 Inventory System</MudText>
-        <MudSpacer />
-        <MudIconButton Icon="Icons.Material.Filled.Brightness4" Color="Color.Inherit" />
-        <MudIconButton Icon="Icons.Material.Filled.Person" Color="Color.Inherit" />
-    </MudAppBar>
+<div class="app-container">
+    <header class="app-header">
+        <client.Layout.NavMenu />
+    </header>
 
-    <MudDrawer @bind-Open="drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <NavMenu />
-    </MudDrawer>
-
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+    <main class="app-main" role="main">
+        <div class="container-fluid py-3">
             @Body
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
+        </div>
+    </main>
 
-@code {
-    private bool drawerOpen = true;
-
-    void DrawerToggle()
-    {
-        drawerOpen = !drawerOpen;
-    }
-}
+    <footer class="app-footer bg-light text-center py-3 mt-auto">
+        <small class="text-muted">
+            &copy; @DateTime.Now.Year Inventory Management System. All rights reserved.
+        </small>
+    </footer>
+</div>
