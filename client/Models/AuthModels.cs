@@ -1,20 +1,42 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace client.Models;
 
 public class LoginRequest
 {
-    public string Username { get; set; } = string.Empty;
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; } = string.Empty;
+
+    [Required]
+    [MinLength(6)]
     public string Password { get; set; } = string.Empty;
 }
 
-public class LoginResponse
+public class RegisterRequest
 {
-    public string Token { get; set; } = string.Empty;
-    public UserDto User { get; set; } = new();
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; } = string.Empty;
+
+    [Required]
+    [MinLength(6)]
+    public string Password { get; set; } = string.Empty;
+
+    [Required]
+    [Compare("Password")]
+    public string ConfirmPassword { get; set; } = string.Empty;
+
+    [Required]
+    public string FirstName { get; set; } = string.Empty;
+
+    [Required]
+    public string LastName { get; set; } = string.Empty;
 }
 
-public class ApiResponse<T>
+public class AuthResponse
 {
     public bool Success { get; set; }
+    public string Token { get; set; } = string.Empty;
     public string Message { get; set; } = string.Empty;
-    public T? Data { get; set; }
 }
